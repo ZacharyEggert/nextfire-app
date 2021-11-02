@@ -10,3 +10,5 @@ const User: React.FC<Props> = () => {
     </div>
   );
 };
+
+export default User;
