@@ -1,7 +1,16 @@
-import {getApp, getApps, initializeApp} from 'firebase/app';
-import {getFirestore} from 'firebase/firestore';
-import {getAuth} from 'firebase/auth';
-import {getStorage} from 'firebase/storage';
+import { getApp, getApps, initializeApp } from 'firebase/app';
+import {
+    getFirestore,
+    collection as Collection,
+    doc as Doc,
+} from 'firebase/firestore';
+import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup as SignInWithPopup,
+    signOut as SignOut,
+} from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyBcv3IQcwibJaGH3j-GV3HYOo34zGKQduo',
@@ -13,10 +22,12 @@ const firebaseConfig = {
     measurementId: 'G-V8NRRZECP0',
 };
 
-let app = getApps().length === 0
-    ? initializeApp(firebaseConfig)
-    : getApp();
+let app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-export const auth = getAuth(app)
-export const firestore = getFirestore(app)
-export const storage = getStorage(app)
+export const googleAuthProvider = new GoogleAuthProvider();
+export const auth = getAuth(app);
+export const signInWithGoogle = async () =>
+    await SignInWithPopup(auth, googleAuthProvider);
+export const signOut = async () => await SignOut(auth);
+export const firestore = getFirestore(app);
+export const storage = getStorage(app);
